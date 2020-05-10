@@ -25,6 +25,75 @@ class FuncoesEstaticas
 	//**************************************************************************************
 	
 	
+    //Função para retornar valores formatados.
+	//**************************************************************************************
+	function formatarValorGenericoLer($strDados, $tipoDados)
+	{
+		//tipoDados: cpf | cnpj | cep
+		$strRetorno = "";
+		$strDadosLength = $strDados;
+		
+		if($strDados <> "")
+		{
+			//CPF
+			if(strlen($strDadosLength) == 11)
+			{
+				$strRetorno	= substr($strDados , 0, 3) . "." . substr($strDados , 3, 3) . "." . substr($strDados , 6, 3) . "-" . substr($strDados , 9, 2);
+			}
+			
+			//CNPJ
+			if(strlen($strDadosLength) == 14)
+			{
+				$strRetorno	= substr($strDados , 0, 2) . "." . substr($strDados , 2, 3) . "." . substr($strDados , 5, 3) . "/" . substr($strDados , 8, 4) . "-" . substr($strDados , 12, 2);
+			}
+			
+		}
+		
+		
+		return $strRetorno;
+	}
+	//**************************************************************************************
+	
+	
+	//Função leitura de valores.
+	//**************************************************************************************
+	function mascaraValorLer($strValor, $configMoeda = "R$")
+	{
+		//configMoeda: pagseguro | paypal | boleto
+		//Obs: mudar configMoeda para formatacaoEspecial
+		
+		//Vari�veis.
+		//----------
+		$strRetorno = "";
+		$strValor = strval($strValor); //Conversão para string.
+		$strValor = str_replace(".", "", $strValor);
+		//----------
+
+		
+		if($strValor <> "")
+		{
+			if(strlen($strValor) < 3)
+			{
+				$strValor = "00" . $strValor;
+			}
+			
+			$strDecimal = substr($strValor, (strlen($strValor) - 2), strlen($strValor));
+			$strValor = substr($strValor, 0, strlen($strValor) - 2) . "." . $strDecimal;
+			
+			//R$ (Real)
+			if($configMoeda == "R$")
+			{
+				$strRetorno = number_format($strValor, 2, ',', '.');
+			}
+			
+	
+		}
+		
+		return $strRetorno;
+	}
+	//**************************************************************************************
+	
+	
     //Função de inclusão de cadastro.
     //**************************************************************************************
     function inserirCadastro($_nome, 
@@ -83,11 +152,9 @@ class FuncoesEstaticas
 			));
 			
 
-			//$mensagemSucesso = "1 " . XMLFuncoes::XMLIdiomas($GLOBALS['xmlIdiomaSistema'], "sistemaStatus2");
 			$strRetorno = true;
 		}else{
 			//echo "erro";
-			//$mensagemErro = XMLFuncoes::XMLIdiomas($GLOBALS['xmlIdiomaSistema'], "sistemaStatus3");
 		}
 		//----------
 		
@@ -102,6 +169,157 @@ class FuncoesEstaticas
 		return $strRetorno;
 	}
     //**************************************************************************************
+	
+	
+	//Função para preencher tabela (FetchAll).
+	//**************************************************************************************
+	function tabelaPesquisar($strTabela, 
+	$arrParametrosPesquisa, 
+	$strClassificacao = "", 
+	$strNRegistros = "")
+	{
+        //arrParametrosPesquisa: array("nomeCampoPesquisa1;valorCampoPesquisa1;tipoCampoPesquisa1", "nomeCampoPesquisa2;valorCampoPesquisa2;tipoCampoPesquisa2", "nomeCampoPesquisa3;valorCampoPesquisa3;tipoCampoPesquisa3")
+        //ex: New String() {"id_tb_cadastro_cliente;31358;s", "tipo_movimento;0;s", "data_movimento;2018-01-22,2018-01-24;dif"}
+        //tipoCampoPesquisa: s (string) | i (integer) | d (data) | dif (data inicial e data final) | ids (id IN)
+        //dif (data inicial e data final) (data): dataInicial,dataFinal
+        
+		
+		//Variáveis.
+        //----------
+		$strReturn = "";
+		$strOperador = "";
+        //----------
+
+
+        //Query de pesquisa.
+        //----------
+        $strSqlTabelaGenericaSelect = "";
+        $strSqlTabelaGenericaSelect .= "SELECT ";
+        $strSqlTabelaGenericaSelect .= "* FROM " . $strTabela . " ";
+        //$strSqlTabelaGenericaSelect .= "WHERE id <> 0 ";
+		
+		//Loop.
+		for($countArray = 0; $countArray < count($arrParametrosPesquisa); ++$countArray)
+		{
+            $arrParametrosPesquisaInfo = explode(";", $arrParametrosPesquisa[$countArray]);
+			
+            $parametrosPesquisaNomeCampo = $arrParametrosPesquisaInfo[0];
+            $parametrosPesquisaValorCampo = $arrParametrosPesquisaInfo[1];
+            $parametrosPesquisaTipoCampo = $arrParametrosPesquisaInfo[2];
+			
+			
+			//Definição de operador.
+			if($countArray == 0)
+			{
+				$strOperador = "WHERE";
+			}else{
+				$strOperador = "AND";
+			}
+			
+			
+            //String.
+			if($parametrosPesquisaTipoCampo == "s")
+			{
+                $strSqlTabelaGenericaSelect .= $strOperador . " " . $parametrosPesquisaNomeCampo . " = ? ";
+			}
+			
+            //Integer.
+			if($parametrosPesquisaTipoCampo == "i")
+			{
+                $strSqlTabelaGenericaSelect .= $strOperador . " " . $parametrosPesquisaNomeCampo . " = ? ";
+			}
+			
+			//ids.
+			if($parametrosPesquisaTipoCampo == "ids")
+			{
+				if($parametrosPesquisaValorCampo == "")
+				{
+					$parametrosPesquisaValorCampo = "0";
+				}
+                $strSqlTabelaGenericaSelect .= $strOperador . " " . $parametrosPesquisaNomeCampo . " IN (" . $parametrosPesquisaValorCampo . ") ";
+			}
+			
+			
+			//Verificação de erro - debug.
+			//echo "parametrosPesquisaNomeCampo=" . $parametrosPesquisaNomeCampo . "<br>";
+			//echo "parametrosPesquisaValorCampo=" . $parametrosPesquisaValorCampo . "<br>";
+			//echo "parametrosPesquisaTipoCampo=" . $parametrosPesquisaTipoCampo . "<br>";
+		} 
+		
+		
+		if($strClassificacao <> "")
+		{
+			$strSqlTabelaGenericaSelect .= "ORDER BY " . $strClassificacao . " ";
+		}
+		//echo "strSqlTabelaGenericaSelect=" . $strSqlTabelaGenericaSelect . "<br>";
+		//var_dump($arrParametrosPesquisa);
+        //----------
+		
+		
+		//Parâmetros.
+        //----------
+        //$statementTabelaGenericaSelect = $dbSistemaConPDO->prepare($strSqlTabelaGenericaSelect);
+		$statementTabelaGenericaSelect = $GLOBALS['dbSystemConPDO']->prepare($strSqlTabelaGenericaSelect);
+
+        if($statementTabelaGenericaSelect !== false)
+        {
+			//Loop.
+			for($countArray = 0; $countArray < count($arrParametrosPesquisa); ++$countArray)
+			{
+				$arrParametrosPesquisaInfo = explode(";", $arrParametrosPesquisa[$countArray]);
+				
+				$parametrosPesquisaNomeCampo = $arrParametrosPesquisaInfo[0];
+				$parametrosPesquisaValorCampo = $arrParametrosPesquisaInfo[1];
+				$parametrosPesquisaTipoCampo = $arrParametrosPesquisaInfo[2];
+				
+				//String.
+				if($parametrosPesquisaTipoCampo == "s")
+				{
+					//$statementTabelaGenericaSelect->bindParam(":" . $parametrosPesquisaNomeCampo, $parametrosPesquisaValorCampo, PDO::PARAM_STR);
+					$statementTabelaGenericaSelect->bindValue(($countArray + 1), $parametrosPesquisaValorCampo, PDO::PARAM_STR);
+				}
+				//Integer.
+				if($parametrosPesquisaTipoCampo == "i")
+				{
+					$statementTabelaGenericaSelect->bindValue(($countArray + 1), $parametrosPesquisaValorCampo, PDO::PARAM_INT);
+				}
+				
+				
+				//Verificação de erro - debug.
+				//echo "parametrosPesquisaNomeCampo=" . $parametrosPesquisaNomeCampo . "<br>";
+				//echo "parametrosPesquisaValorCampo=" . $parametrosPesquisaValorCampo . "<br>";
+				//echo "parametrosPesquisaTipoCampo=" . $parametrosPesquisaTipoCampo . "<br>";
+			} 
+			
+			//var_dump($statementTabelaGenericaSelect);
+			$statementTabelaGenericaSelect->execute();
+
+			/*
+            $statementTabelaGenericaSelect->execute(array(
+                "idRegistro" => $tipoComplemento
+            ));
+			*/
+			
+			
+			//Verificação de erro - debug.
+			//$statementTabelaGenericaSelect->debugDumpParams();
+        }
+        //----------
+
+
+        $strRetorno = $statementTabelaGenericaSelect->fetchAll();
+		
+		
+        //Limpeza de objetos.
+        //----------
+        unset($strSqlTabelaGenericaSelect);
+        unset($statementTabelaGenericaSelect);
+        //----------
+		
+		return $strRetorno;
+	}
+	//**************************************************************************************
+	
 }
 
 ?>

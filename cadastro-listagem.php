@@ -1,6 +1,8 @@
 <?php
 ini_set('display_errors', 1);
 require_once "config-application-db.php";
+require_once "classes/funcoes-estaticas.php";
+require_once "classes/obj-cadastro-listagem.php";
 
 //Layout
 //$pageSite = new \stdClass();
@@ -14,6 +16,24 @@ $pageSite = (object)NULL;
 //Variáveis.
 $mensagemSucesso = isset($_GET["mensagemSucesso"]) == true ? $_GET["mensagemSucesso"] : "";
 $mensagemErro = isset($_GET["mensagemErro"]) == true ? $_GET["mensagemErro"] : "";
+
+$oclCadastro = new ObjCadastroListagem(array());
+$resultadoCadastroListagem = NULL;
+
+
+//Pesquisar registros.
+$oclCadastro->cadastroListagemLer();
+
+$resultadoCadastroListagem = $oclCadastro->resultadoCadastroListagem;
+/*
+$resultadoCadastroListagem = FuncoesEstaticas::tabelaPesquisar("tb_cadastro", 
+																array(), 
+																"nome", 
+																"");
+*/																
+//echo "resultadoCadastroListagem=<pre>";
+//var_dump($resultadoCadastroListagem);
+//echo "</pre><br />";
 ?>
 
 <?php ob_start(); /* cphTituloLinkAtual*/ ?>
@@ -34,82 +54,86 @@ $pageSite->cphTituloLinkAtual = ob_get_clean();
 								Cadastro criado com sucesso.
 							</div>
 						<?php } ?>
-						<form name="formCadastroAcoes" id="formCadastroAcoes" action="cadastro-acoes.php" method="post">
-							<input type="hidden" name="_method" value="DELETE" />
-							<table id="cadastroListagem" class="table table-bordered table-condensed table-responsive">
-								<caption style="display: none;">Cadastros</caption>
-								<thead class="tabela-cabecalho">
-									<tr>
-										<td class="text-center">Cadastros</td>
-										<td class="text-center" style="width: 30px;">Editar</td>
-										<td class="text-center" style="width: 20px;">X</td>
-									</tr>
-								</thead>
-			
-								<tbody>
-									<tr class="tabela-fileira">
-										<td>
-											<div>
-												<strong>
-													Nome: 
-												</strong>
-												<a href="cadastro-detalhes.php?id=" class="links">
-													xxx
+						
+						<?php if(empty($resultadoCadastroListagem)){ ?>
+							<div class="alert alert-danger">
+								Nenhum cadastro encontrado.
+							</div>
+						<?php }else{ ?>
+							<form name="formCadastroAcoes" id="formCadastroAcoes" action="cadastro-acoes.php" method="post">
+								<input type="hidden" name="_method" value="DELETE" />
+								<table id="cadastroListagem" class="table table-bordered table-condensed table-responsive">
+									<caption style="display: none;">Cadastros</caption>
+									<thead class="tabela-cabecalho">
+										<tr>
+											<td class="text-center">Cadastros</td>
+											<td class="text-center" style="width: 30px;">Editar</td>
+											<td class="text-center" style="width: 20px;">X</td>
+										</tr>
+									</thead>
+				
+									<tbody>
+										<?php
+										//Loop pelos resultados.
+										foreach($resultadoCadastroListagem as $linhaCadastro){ ?>
+									  	
+										<tr class="tabela-fileira">
+											<td>
+												<div>
+													<strong>
+														Nome: 
+													</strong>
+													<a href="cadastro-detalhes.php?id=" class="links">
+														<?php echo $linhaCadastro['nome'];?>
+													</a>
+												</div>
+												<div>
+													<strong>
+														CPF / CNPJ: 
+													</strong>
+													<?php echo FuncoesEstaticas::formatarValorGenericoLer($linhaCadastro['cpf_cnpj'], "");?>
+												</div>
+												<div>
+													<strong>
+														Data Nasc.: 
+													</strong>
+													<?php echo $linhaCadastro['data_nascimento'];?>
+												</div>
+												<div>
+													<strong>
+														Valor: 
+													</strong>
+													R$ <?php echo FuncoesEstaticas::mascaraValorLer($linhaCadastro['valor']);?>
+												</div>
+											</td>
+											<td style="text-align: center; vertical-align: middle;">
+												<a href="cadastro-editar.php?id=" class="links-acoes" style="width: 30px; height: 30px;">
+													E
 												</a>
-											</div>
-											<div>
-												<strong>
-													CPF / CNPJ: 
-												</strong>
-												xxx
-											</div>
-											<div>
-												<strong>
-													Data Nasc.: 
-												</strong>
-												xxx
-											</div>
-											<div>
-												<strong>
-													Valor: 
-												</strong>
-												xxx
-											</div>
-										</td>
-										<td style="text-align: center; vertical-align: middle;">
-											<a href="cadastro-editar.php?id=" class="links-acoes" style="width: 30px; height: 30px;">
-												E
-											</a>
-										</td>
-										<td style="text-align: center; vertical-align: middle;">
-											<input name="idsRegistrosExcluir[]" type="checkbox" value="id" />
-										</td>
-									</tr>
-									<tr class="tabela-fileira">
-										<td> xxx </td>
-										<td style="text-align: center;"> E </td>
-										<td style="text-align: center;"> x </td>
-									</tr>
-								</tbody>
-								<tfoot>
-									<tr>
-										<td colspan="3" style="text-align: center;">
-											<button type="submit" class="btn btn-danger" style="float:right;">
-												Excluir Selecionados
-											</button>
-										</td>
-									</tr>
-								</tfoot>
-							</table>
-						</form>
-						<script>
-							$(document).ready(function() {
-								//$('#cadastroListagem').DataTable();
-							});
-						</script>
-						<div class="alert alert-danger">
-						Nenhum cadastro encontrado.
-						</div>
+											</td>
+											<td style="text-align: center; vertical-align: middle;">
+												<input name="idsRegistrosExcluir[]" type="checkbox" value="id" />
+											</td>
+										</tr>
+										<?php } ?>
+									</tbody>
+									<tfoot>
+										<tr>
+											<td colspan="3" style="text-align: center;">
+												<button type="submit" class="btn btn-danger" style="float:right;">
+													Excluir Selecionados
+												</button>
+											</td>
+										</tr>
+									</tfoot>
+								</table>
+							</form>
+							<script>
+								$(document).ready(function() {
+									//$('#cadastroListagem').DataTable();
+								});
+							</script>
+						<?php } ?>
 <?php 
 $pageSite->cphConteudoPrincipal = ob_get_clean(); 
 //ob_end_flush();
@@ -193,9 +217,6 @@ $pageSite->cphConteudoPrincipal = ob_get_clean();
 								//this.value=''
 							});
 						</script>
-                        no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no
-                        no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no
-                        no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no
 					</div>
 				</section>
 <?php 
@@ -206,6 +227,8 @@ $pageSite->cphConteudo = ob_get_clean();
 <?php
 //Inclusão do template do layout.
 include_once "layout.php";
+
+unset($resultadoCadastroListagem);
 
 $dbSystemConPDO = null;
 ?>
