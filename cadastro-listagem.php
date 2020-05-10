@@ -9,17 +9,33 @@ $pageSite = (object)NULL;
 
 //$pageSite->cphTituloLinkAtual = "";
 //$pageSite->cphConteudoPrincipal = "";
+
+
+//Variáveis.
+$mensagemSucesso = isset($_GET["mensagemSucesso"]) == true ? $_GET["mensagemSucesso"] : "";
+$mensagemErro = isset($_GET["mensagemErro"]) == true ? $_GET["mensagemErro"] : "";
 ?>
 
 <?php ob_start(); /* cphTituloLinkAtual*/ ?>
-	Listagem
+	Listagem de Cadastro
 <?php 
 $pageSite->cphTituloLinkAtual = ob_get_clean(); 
 //ob_end_flush();
 ?>
 
 <?php ob_start(); /* cphConteudoPrincipal*/ ?>
-						<form>
+						<?php if($mensagemSucesso == "1"){ ?>
+							<div class="alert alert-success" style="text-align: center;">
+								Cadastro criado com sucesso.
+							</div>
+						<?php } ?>
+						<?php if($mensagemErro == "1"){ ?>
+							<div class="alert alert-success" style="text-align: center;">
+								Cadastro criado com sucesso.
+							</div>
+						<?php } ?>
+						<form name="formCadastroAcoes" id="formCadastroAcoes" action="cadastro-acoes.php" method="post">
+							<input type="hidden" name="_method" value="DELETE" />
 							<table id="cadastroListagem" class="table table-bordered table-condensed table-responsive">
 								<caption style="display: none;">Cadastros</caption>
 								<thead class="tabela-cabecalho">
@@ -105,26 +121,17 @@ $pageSite->cphConteudoPrincipal = ob_get_clean();
 						Inserir Novo Cadastro
 					</h1>
 					<div class="layout-conteudo">
-						<form>
+						<form name="formCadastro" id="formCadastro" action="cadastro-acoes.php" method="post" enctype="multipart/form-data">
+							<input type="hidden" name="_method" value="CREATE" />
+							
 							<div class="div-campos">
 								<input type="text" class="form-control" id="nome" name="nome" maxlength="255" required placeholder="Nome" />
 							</div>
 							<div class="div-campos">
 								<input type="text" class="form-control" id="cpf_cnpj" name="cpf_cnpj" required placeholder="CPF / CNPJ" maxlength="17" style="width: 50%; float: left;" />
 									<script type="text/javascript">
-										/*$(function() {
-											$.mask.definitions['~'] = "[+-]";
-											$("#cpf_cnpj").mask("999.999.999-99");
-										});*/
-										
-										//$.mask.definitions['~'] = "[+-]";
-									
-										//$("#cpf_cnpj").keypress(function(){
 										$("#cpf_cnpj").on("keyup", function(){
-											//var campoConteudoStrip = this.value.replace(/[^0-9.]/g, "");
 											var campoConteudoStrip = document.getElementById("cpf_cnpj").value.replace(/[^\d]/g, "");
-											//var contadorCaracteres = document.getElementById("nome").value.length;
-											//console.log("campoConteudoStrip=", campoConteudoStrip);
 											var contadorCaracteres = campoConteudoStrip.length;
 											
 											
@@ -132,8 +139,6 @@ $pageSite->cphConteudoPrincipal = ob_get_clean();
 											elementoMostrar("divCPFAlerta");
 											if(contadorCaracteres > 11 && contadorCaracteres < 14)
 											{
-												
-												//apagar botão
 												elementoOcultar("btoSubmit");
 												elementoMostrar("divCPFAlerta");
 											}else{
@@ -144,16 +149,8 @@ $pageSite->cphConteudoPrincipal = ob_get_clean();
 												}
 												
 												document.getElementById("cpf_cnpj").value = formatCnpjCpf(campoConteudoStrip);
-												
 											}
-											
-											
-											
-											//this.value = this.value.length;
-											
-											//$("#nome").val() = this.value.length;
-											//document.getElementById("nome").value = this.value.length;
-											document.getElementById("nome").value = contadorCaracteres; //debug
+											//document.getElementById("nome").value = contadorCaracteres; //debug
 										});
 									</script>
 								<input type="text" onfocus="(this.type='date')" class="form-control" id="data_nascimento" name="data_nascimento" required placeholder="Data de Nasc." title="Data de Nasc." max="2020-05-10" style="width: 50%; float: right;" />
@@ -162,7 +159,7 @@ $pageSite->cphConteudoPrincipal = ob_get_clean();
 								<input type="text" class="form-control" id="endereco" name="endereco" maxlength="1000" required placeholder="Endereço" />
 							</div>
 							<div class="div-campos">
-								<textarea class="form-control" id="descricao" name="descricao" rows="4" required placeholder="Descrição" style="resize: none;"></textarea>
+								<textarea class="form-control" id="descricao_titulo" name="descricao_titulo" rows="4" required placeholder="Descrição" style="resize: none;"></textarea>
 							</div>
 							<div class="div-campos">
 								<div class="input-group" style="width: 50%; float: left;">
@@ -191,9 +188,9 @@ $pageSite->cphConteudoPrincipal = ob_get_clean();
 							});
 							
 							$("#valor").focus(function(){
-								this.value='0'
+								//this.value='0'
 							}).blur(function(){
-								this.value=''
+								//this.value=''
 							});
 						</script>
                         no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no
