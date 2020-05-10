@@ -27,7 +27,7 @@ class FuncoesEstaticas
 	
     //Função para retornar valores formatados.
 	//**************************************************************************************
-	function formatarValorGenericoLer($strDados, $tipoDados)
+	function formatarValorGenericoLer($strDados, $tipoDados = "")
 	{
 		//tipoDados: cpf | cnpj | cep
 		$strRetorno = "";
