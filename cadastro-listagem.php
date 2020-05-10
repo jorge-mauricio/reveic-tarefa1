@@ -49,9 +49,14 @@ $pageSite->cphTituloLinkAtual = ob_get_clean();
 								Cadastro criado com sucesso.
 							</div>
 						<?php } ?>
+						<?php if($mensagemSucesso == "2"){ ?>
+							<div class="alert alert-success" style="text-align: center;">
+								Cadastro(s) excluídos com sucesso.
+							</div>
+						<?php } ?>
 						<?php if($mensagemErro == "1"){ ?>
 							<div class="alert alert-success" style="text-align: center;">
-								Cadastro criado com sucesso.
+								Erro com banco de dados.
 							</div>
 						<?php } ?>
 						
@@ -83,7 +88,7 @@ $pageSite->cphTituloLinkAtual = ob_get_clean();
 													<strong>
 														Nome: 
 													</strong>
-													<a href="cadastro-detalhes.php?id=" class="links">
+													<a href="cadastro-detalhes.php?id=<?php echo $linhaCadastro['id'];?>" class="links">
 														<?php echo $linhaCadastro['nome'];?>
 													</a>
 												</div>
@@ -97,7 +102,7 @@ $pageSite->cphTituloLinkAtual = ob_get_clean();
 													<strong>
 														Data Nasc.: 
 													</strong>
-													<?php echo $linhaCadastro['data_nascimento'];?>
+													<?php echo FuncoesEstaticas::dataLeitura($linhaCadastro['data_nascimento'], 1, 1);?>
 												</div>
 												<div>
 													<strong>
@@ -107,12 +112,12 @@ $pageSite->cphTituloLinkAtual = ob_get_clean();
 												</div>
 											</td>
 											<td style="text-align: center; vertical-align: middle;">
-												<a href="cadastro-editar.php?id=" class="links-acoes" style="width: 30px; height: 30px;">
+												<a href="cadastro-editar.php?id=<?php echo $linhaCadastro['id'];?>" class="links-acoes" style="width: 30px; height: 30px;">
 													E
 												</a>
 											</td>
 											<td style="text-align: center; vertical-align: middle;">
-												<input name="idsRegistrosExcluir[]" type="checkbox" value="id" />
+												<input name="idsRegistrosExcluir[]" type="checkbox" value="<?php echo $linhaCadastro['id'];?>" />
 											</td>
 										</tr>
 										<?php } ?>

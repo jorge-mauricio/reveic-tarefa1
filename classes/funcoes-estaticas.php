@@ -94,6 +94,77 @@ class FuncoesEstaticas
 	//**************************************************************************************
 	
 	
+	//Fun��o para formatar data.
+	//**************************************************************************************
+	function dataLeitura($strData, $strFormatoData, $strFormatoRetorno)
+	{
+		//$strFormatoRetorno: 1 - (dd/mm/aaaa | mm/dd/aaaa) | 2 - (dd/mm/aaaa hh:mm:ss | mm/dd/aaaa hh:mm:ss) | 3 - aaaa-mm-dd hh:mm:ss | 10 - (aaaa-mm-dd) | 11 - aaaa-mm-ddThh:mm:ss | 22 - hh:mm:ss | 101 - data por extenso (dia da semana, dia de m�s de ano)
+		//$strFormatoData: configSistemaFormatoData | configSiteFormatoData | sigla pa�s (br)
+		
+		//Vari�veis.
+		//----------------------
+		$strReturn = "";
+		//----------------------
+		
+		
+		if($strData <> NULL)
+		{
+			if($strFormatoRetorno == "1")
+			{
+				if($strFormatoData == 1)
+				{
+					$strReturn = date("d",strtotime($strData)) . "/" . date("m",strtotime($strData)) . "/" . date("Y",strtotime($strData));
+				}
+				if($strFormatoData == 2)
+				{
+					$strReturn = date("m",strtotime($strData)) . "/" . date("d",strtotime($strData)) . "/" . date("Y",strtotime($strData));
+				}
+			}
+			
+			if($strFormatoRetorno == "2")
+			{
+				if($strFormatoData == 1)
+				{
+					$strReturn = date("d",strtotime($strData)) . "/" . date("m",strtotime($strData)) . "/" . date("Y",strtotime($strData)) . " " . date("H",strtotime($strData)) . ":" . date("i",strtotime($strData)) . ":" . date("s",strtotime($strData));
+				}
+				if($strFormatoData == 2)
+				{
+					$strReturn = date("m",strtotime($strData)) . "/" . date("d",strtotime($strData)) . "/" . date("Y",strtotime($strData)) . " " . date("H",strtotime($strData)) . ":" . date("i",strtotime($strData)) . ":" . date("s",strtotime($strData));
+				}
+			}
+			
+			if($strFormatoRetorno == "3")
+			{
+				$strReturn = date("Y",strtotime($strData)) . "-" . date("m",strtotime($strData)) . "-" . date("d",strtotime($strData)) . " " . date("H",strtotime($strData)) . ":" . date("i",strtotime($strData)) . ":" . date("s",strtotime($strData));
+			}
+			
+			if($strFormatoRetorno == "10")
+			{
+				$strReturn = date("Y",strtotime($strData)) . "-" . date("m",strtotime($strData)) . "-" . date("d",strtotime($strData));
+			}
+			
+			if($strFormatoRetorno == "11")
+			{
+				$strReturn = date("Y",strtotime($strData)) . "-" . date("m",strtotime($strData)) . "-" . date("d",strtotime($strData)) . "T" . date("H",strtotime($strData)) . ":" . date("i",strtotime($strData)) . ":" . date("s",strtotime($strData));
+			}
+			
+			if($strFormatoRetorno == "22")
+			{
+				$strReturn = date("H",strtotime($strData)) . ":" . date("i",strtotime($strData)) . ":" . date("s",strtotime($strData));
+			}
+			
+			//101 - data por extenso.
+			if($strFormatoRetorno == "101")
+			{
+				$strReturn = Funcoes::ConteudoMascaraLeitura(Funcoes::DataTraducao(date("l",strtotime($strData)), "s", "pt-br"), "IncludeConfig") . ", " . date("j",strtotime($strData)) . " de " .  Funcoes::ConteudoMascaraLeitura(Funcoes::DataTraducao(date("F",strtotime($strData)), "m", "pt-br"), "IncludeConfig") . " de " . date("Y",strtotime($strData));
+			}
+		}
+		
+		return $strReturn;
+	}
+	//**************************************************************************************
+	
+	
     //Função de inclusão de cadastro.
     //**************************************************************************************
     function inserirCadastro($_nome, 
@@ -320,6 +391,41 @@ class FuncoesEstaticas
 	}
 	//**************************************************************************************
 	
+	
+    //Função para exclusão genérica de registros.
+	//**************************************************************************************
+	function excluirRegistros($idRegistro, $strTabela, $strNomeCampo)
+	{
+		$strRetorno = false;
+		
+		//Exclusão de registro no BD.
+		//----------
+		$strExcluirRegistrosGenerico = "";
+		$strExcluirRegistrosGenerico .= "DELETE FROM " . $strTabela . " ";
+		$strExcluirRegistrosGenerico .= "WHERE " . $strNomeCampo . " = :idRegistro";
+		
+		$statementExcluirRegistrosGenerico = $GLOBALS['dbSystemConPDO']->prepare($strExcluirRegistrosGenerico);
+		
+		if($statementExcluirRegistrosGenerico !== false)
+		{
+			$statementExcluirRegistrosGenerico->execute(array(
+				"idRegistro" => $idRegistro
+			));
+			$strRetorno = true;
+		}else{
+		}
+		//----------
+
+		//Limpeza de objetos.
+		//----------
+		unset($strExcluirRegistrosGenerico);
+		unset($statementExcluirRegistrosGenerico);
+		//----------
+
+
+		return $strRetorno;
+	}
+	//**************************************************************************************
 }
 
 ?>

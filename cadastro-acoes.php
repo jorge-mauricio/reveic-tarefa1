@@ -7,14 +7,6 @@ require_once "classes/obj-cadastro-create.php";
 
 
 //Variáveis.
-$nome = $_POST["nome"];
-$cpfCnpj = FuncoesEstaticas::somenteNum($_POST["cpf_cnpj"]);
-$dataNascimento = $_POST["data_nascimento"];
-$endereco = $_POST["endereco"];
-$descricaoTitulo = $_POST["descricao_titulo"];
-$valor = FuncoesEstaticas::valorGravar($_POST["valor"]);
-$dataVencimento = $_POST["data_vencimento"];
-//$updated = $_POST["updated"];
 $_method = $_POST["_method"];
 
 $configUrl = "https://www.jorgemauricio.com/clientes/receiv";
@@ -27,6 +19,15 @@ $mensagemErro = 0;
 //Create.
 if($_method == "CREATE")
 {
+	$nome = $_POST["nome"];
+	$cpfCnpj = FuncoesEstaticas::somenteNum($_POST["cpf_cnpj"]);
+	$dataNascimento = $_POST["data_nascimento"];
+	$endereco = $_POST["endereco"];
+	$descricaoTitulo = $_POST["descricao_titulo"];
+	$valor = FuncoesEstaticas::valorGravar($_POST["valor"]);
+	$dataVencimento = $_POST["data_vencimento"];
+	//$updated = $_POST["updated"];
+	
 	if($valor == "")
 	{
 		$valor = 0;	
@@ -62,8 +63,30 @@ if($_method == "CREATE")
 }
 
 
+//Delete.
+if($_method == "DELETE")
+{
+	$arrIdsRegistrosExcluir = $_POST["idsRegistrosExcluir"];
+	$countRegistrosExcluidos = 0;
+	
+	if(!empty($arrIdsRegistrosExcluir))
+	{
+		foreach($arrIdsRegistrosExcluir as $idRegistro)
+		{
+			
+			if(FuncoesEstaticas::excluirRegistros($idRegistro, "tb_cadastro", "id"))
+			{
+				$countRegistrosExcluidos = $countRegistrosExcluidos + 1;
+				$mensagemSucesso = 2;
+			}else{
 
-
+			}
+			
+			//Debug.			
+			//echo "idRegistro=" . $idRegistro . "<br />";
+		}
+	}
+}
 
 
 //Debug.
