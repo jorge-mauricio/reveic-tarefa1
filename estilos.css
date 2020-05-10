@@ -1,0 +1,183 @@
+/*Layout.*/
+/* ************************************************************************************** */
+.layout-header
+{
+	position: relative; 
+	display: block; 
+	overflow: hidden;
+	clear: both;
+}
+
+.layout-logo
+{
+	position: relative; 
+	display: block; 
+	text-align: center;
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+.layout-main
+{
+	/*position: relative; 
+	display: block; 
+	display: flex; */
+	flex: 1; 
+	align-items: stretch;
+	
+	overflow: hidden;
+	/*min-height: 350px;*/
+}
+
+.layout-titulos
+{
+	position: relative; 
+	display: block;
+	width: 100%;/**/
+	/*min-width: 100%; max-width: 100%;*/
+	clear: both;
+	
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 16px;
+	font-weight: bold;
+	color: #ff4b14; 
+	border-bottom: 1px solid #ff4b14;
+	
+	text-align: left;
+	margin: 0px; 
+	padding: 0px; 
+	line-height: inherit;
+	
+	overflow: hidden;
+}
+
+.layout-conteudo
+{
+	position: relative; 
+	display: block; 
+	width: 100%;
+	
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 13px;
+	color: #32364a; 
+
+	overflow: hidden;
+	margin: 10px 0px 10px 0px;
+	clear: both;
+}
+
+.layout-footer
+{
+	position: relative; 
+	display: block;
+	width: 100%;
+	padding: 0px;
+	/*min-height: 150px;*/
+
+	/*background-color: #1e2030;
+	border-bottom: 50px solid #161726;*/
+	
+}
+
+.layout-contato
+{
+	position: relative; 
+	display: block; 
+	text-align: left; 
+	font-style: normal;
+	
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color: #ffffff; 
+}
+
+.layout-creditos
+{
+	position: relative; 
+	display: block; 
+
+	font-size: 9px; 
+	text-align: center; 
+	width: 100%; 
+	line-height: 20px; 
+	background-color: #161726;
+	min-height: 50px;
+}
+/* ************************************************************************************** */
+
+
+
+/*Estilos padrões.*/
+/* ************************************************************************************** */
+input, textarea
+{
+	/*Ajustar tamanho, caso utilize width: 100%;.*/
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+/* ************************************************************************************** */
+
+
+/*Estilos personalizados.*/
+/* ************************************************************************************** */
+.links
+{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 13px;
+	color: #32364a; 
+	text-decoration: underline;
+}
+.links:hover
+{
+	color: #ff4b14; 
+}
+
+.links-acoes
+{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 13px;
+	color: #ff4b14; 
+}
+.links-acoes:hover
+{
+	color: #32364a; 
+}
+.link-rodape
+{
+	font-family: Arial, Helvetica, sans-serif;
+	/*font-size: 13px;*/
+	color: #ffffff;
+	text-decoration: none;
+}
+.link-rodape:hover
+{
+	color: #ff4b14;
+}
+
+
+.tabela-cabecalho
+{
+	font-family: Arial, Helvetica, sans-serif;
+	color: #ffffff;
+	font-size: 13px;
+	background-color: #32364a;
+	
+}
+.tabela-fileira
+{
+	font-family: Arial, Helvetica, sans-serif;
+	color: #32364a;
+	font-size: 13px;
+	background-color: #ffffff;
+	
+}
+.div-campos
+{
+	position: relative; 
+	display: block; 
+	
+	margin-bottom: 5px;
+	overflow: hidden;
+}
+/* ************************************************************************************** */

@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+	<head>
+		<!--Google Analytics.-->
+		
+		<meta charset="UTF-8">
+		
+		<meta http-equiv="X-UA-Compatible" content="IE=edge"><!--Bootstrap required.-->
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		
+		<title>
+			RECEIV - Tarefa de Teste
+		</title>
+		
+		<!--Style Sheets. -->
+		<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.20/datatables.min.css"/>
+		<link rel="stylesheet" type="text/css" href="js/bootstrap.min.css" /><!--Note: Any custom css file must be included after the bootstrap css.-->
+		<link rel="stylesheet" type="text/css" href="estilos.css" media="screen" title="Default" />
+		<link rel="canonical" href="https://www.jorgemauricio.com" />
+		
+		<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+		<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+		<link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+		<link rel="manifest" href="site.webmanifest">
+		<link rel="mask-icon" href="safari-pinned-tab.svg" color="#ff4b14">
+		<meta name="msapplication-TileColor" content="#32364a">
+		<meta name="theme-color" content="#32364a">
+		
+		<!--Content meta tags. -->
+		<meta name="title" content="RECEIV - Tarefa de Teste" />
+        <meta name="description" content="Tarefa de Teste" />
+        <meta name="keywords" content="receiv, jorge mauricio, php" />
+		<meta name="robots" content="index, follow" />
+		
+		<meta name="language" content="portuguese" />
+		<!--meta http-equiv="pragma" content="no-cache" /-->
+		
+		<!--Authoring meta tags. -->
+		<meta name="author" content="Jorge Mauricio" />
+		<meta name="designer" content="Jorge Mauricio" />
+		<meta name="copyright" content="2020, Planejamento Visual" />
+		<meta name="rating" content="general" /><!--general | mature | restricted | 14 years. -->
+		
+		<!--Open Graph tags. -->
+		<meta property="og:title" content="RECEIV - Tarefa de Teste" />
+		<meta property="og:type" content="website" /><!--ref: http://ogp.me/#types | https://developers.facebook.com/docs/reference/opengraph/-->
+		<meta property="og:url" content="https://www.jorgemauricio.com/clientes/receiv" />
+		<meta property="og:description" content="Tarefa de Teste" />
+		<meta property="og:image" content="https://www.jorgemauricio.com/clientes/img/layout-logo-receiv02.png" /><!--The recommended resolution for the OG image is 1200x627 pixels, the size — up to 5MB.--><!--120x120px, up to 1MB--><!--JPG ou PNG, menos que 300k e dimensão mínima de 300x200 pixels.-->
+		<meta property="og:image:alt" content="RECEIV - Logo" />
+		<meta property="og:locale" content="pt_BR" />
+		
+		
+		<!--Personalized library. -->
+		<script src="js/funcoes-personalizadas.js"></script>
+		
+		<!--JQuery. -->
+		<!-- ************************************************************************************** -->
+		<!--script src="js/jquery-1.8.3.min.js"></script-->
+		<script src="js/jquery-2.1.3.min.js"></script>
+		<!-- ************************************************************************************** -->
+	
+	
+		<!--Outras bibliotecas. -->
+		<!-- ************************************************************************************** -->
+		<script src="js/maskMoney/src/jquery.maskMoney.js" type="text/javascript"></script>
+		<script src="js/maskedinput/dist/jquery.maskedinput.min.js" type="text/javascript"></script>
+		
+		 
+		<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.20/datatables.min.js"></script>
+		<!-- ************************************************************************************** -->
+
+
+		<!--CSS - page level. -->
+		<style>
+			html,
+			body{
+				margin: 0;
+				padding: 0;
+				/*height: 100%;*/
+				/*overflow-x: hidden;*/
+				/*overflow: hidden;*/
+				
+				/*background-image: url(img/layout-bg1.png); 
+				background-repeat: no-repeat; 
+				background-attachment: fixed;
+				background-position: center 70px;*/
+				background-color: #f5f6fa;
+			}
+		</style>
+	</head>
+	
+	<body>
+		<noscript>Por favor habilite JavaScript</noscript>
+        <div style="position: relative; display: flex; width: 100%; flex-direction: column; min-height: 100vh;">
+			<header class="container layout-header">
+				<a href="cadastro-listagem.php" class="layout-logo" title="Home">
+					<img class="hidden-xs hidden-sm visible-md visible-lg center-block" src="img/layout-logo-receiv02.png" alt="Logo RECEIV" />
+					<img class="visible-xs visible-sm hidden-md hidden-lg center-block" src="img/layout-logo-receiv_w250.png" alt="Logo RECEIV" />
+				</a>
+			</header>
+			<main class="container layout-main">
+				<section>
+					<h1 class="container layout-titulos" style="margin-bottom: 10px;">
+						Listagem de Cadastros
+					</h1>
+					<div class="layout-conteudo">
+						<form>
+							<table id="cadastroListagem" class="table table-bordered table-condensed table-responsive">
+								<caption style="display: none;">Cadastros</caption>
+								<thead class="tabela-cabecalho">
+									<tr>
+										<td class="text-center">Cadastros</td>
+										<td class="text-center" style="width: 30px;">Editar</td>
+										<td class="text-center" style="width: 20px;">X</td>
+									</tr>
+								</thead>
+			
+								<tbody>
+									<tr class="tabela-fileira">
+										<td>
+											<div>
+												<strong>
+													Nome: 
+												</strong>
+												<a href="cadastro-detalhes.php?id=" class="links">
+													xxx
+												</a>
+											</div>
+											<div>
+												<strong>
+													CPF / CNPJ: 
+												</strong>
+												xxx
+											</div>
+											<div>
+												<strong>
+													Data Nasc.: 
+												</strong>
+												xxx
+											</div>
+											<div>
+												<strong>
+													Valor: 
+												</strong>
+												xxx
+											</div>
+										</td>
+										<td style="text-align: center; vertical-align: middle;">
+											<a href="cadastro-editar.php?id=" class="links-acoes" style="width: 30px; height: 30px;">
+												E
+											</a>
+										</td>
+										<td style="text-align: center; vertical-align: middle;">
+											<input name="idsRegistrosExcluir[]" type="checkbox" value="id" />
+										</td>
+									</tr>
+									<tr class="tabela-fileira">
+										<td> xxx </td>
+										<td style="text-align: center;"> E </td>
+										<td style="text-align: center;"> x </td>
+									</tr>
+								</tbody>
+								<tfoot>
+									<tr>
+										<td colspan="3" style="text-align: center;">
+											<button type="submit" class="btn btn-danger" style="float:right;">
+												Excluir Selecionados
+											</button>
+										</td>
+									</tr>
+								</tfoot>
+							</table>
+						</form>
+						<script>
+							$(document).ready(function() {
+								//$('#cadastroListagem').DataTable();
+							});
+						</script>
+						<div class="alert alert-danger">
+						Nenhum cadastro encontrado.
+						</div>
+					</div>
+				</section>
+				<section>
+					<h1 class="layout-titulos container">
+						Inserir Novo Cadastro
+					</h1>
+					<div class="layout-conteudo">
+						<form>
+							<div class="div-campos">
+								<input type="text" class="form-control" id="nome" name="nome" maxlength="255" required placeholder="Nome" />
+							</div>
+							<div class="div-campos">
+								<input type="text" class="form-control" id="cpf_cnpj" name="cpf_cnpj" required placeholder="CPF / CNPJ" maxlength="17" style="width: 50%; float: left;" />
+									<script type="text/javascript">
+										/*$(function() {
+											$.mask.definitions['~'] = "[+-]";
+											$("#cpf_cnpj").mask("999.999.999-99");
+										});*/
+										
+										//$.mask.definitions['~'] = "[+-]";
+									
+										//$("#cpf_cnpj").keypress(function(){
+										$("#cpf_cnpj").on("keyup", function(){
+											//var campoConteudoStrip = this.value.replace(/[^0-9.]/g, "");
+											var campoConteudoStrip = document.getElementById("cpf_cnpj").value.replace(/[^\d]/g, "");
+											//var contadorCaracteres = document.getElementById("nome").value.length;
+											//console.log("campoConteudoStrip=", campoConteudoStrip);
+											var contadorCaracteres = campoConteudoStrip.length;
+											
+											
+											elementoOcultar("btoSubmit");
+											elementoMostrar("divCPFAlerta");
+											if(contadorCaracteres > 11 && contadorCaracteres < 14)
+											{
+												
+												//apagar botão
+												elementoOcultar("btoSubmit");
+												elementoMostrar("divCPFAlerta");
+											}else{
+												if(contadorCaracteres == 11 || contadorCaracteres == 14)
+												{
+													elementoMostrar("btoSubmit");
+													elementoOcultar("divCPFAlerta");
+												}
+												
+												document.getElementById("cpf_cnpj").value = formatCnpjCpf(campoConteudoStrip);
+												
+											}
+											
+											
+											
+											//this.value = this.value.length;
+											
+											//$("#nome").val() = this.value.length;
+											//document.getElementById("nome").value = this.value.length;
+											document.getElementById("nome").value = contadorCaracteres; //debug
+										});
+									</script>
+								<input type="text" onfocus="(this.type='date')" class="form-control" id="data_nascimento" name="data_nascimento" required placeholder="Data de Nasc." title="Data de Nasc." max="2020-05-10" style="width: 50%; float: right;" />
+							</div>
+							<div class="div-campos form-group">
+								<input type="text" class="form-control" id="endereco" name="endereco" maxlength="1000" required placeholder="Endereço" />
+							</div>
+							<div class="div-campos">
+								<textarea class="form-control" id="descricao" name="descricao" rows="4" required placeholder="Descrição" style="resize: none;"></textarea>
+							</div>
+							<div class="div-campos">
+								<div class="input-group" style="width: 50%; float: left;">
+									<div class="input-group-addon">R$</div>
+									<input type="text" class="form-control" id="valor" name="valor" required placeholder="Valor" style="text-align: right;" />
+									<script type="text/javascript">
+										$("#valor").maskMoney({allowNegative: false, thousands:'.', decimal:',', affixesStay: false});
+									</script>
+								</div>
+								<input type="text" class="form-control" id="data_vencimento" name="data_vencimento" required placeholder="Data de Vencimento" min="2020-05-10" style="width: 50%; float: right;" />
+							</div>
+							<div class="div-campos" style="text-align: center;">
+								<button id="btoSubmit" type="submit" class="btn btn-success" style="width: 100px; margin: auto;">
+									Incluir
+								</button>
+								<div id="divCPFAlerta" class="alert alert-warning" style="display: none;">
+								  CPF / CNPJ incompleto.
+								</div>
+							</div>
+						</form>
+						<script>
+							$("#data_nascimento, #data_vencimento").focus(function(){
+								this.type='date'
+							}).blur(function(){
+								this.type='text'
+							});
+							
+							$("#valor").focus(function(){
+								this.value='0'
+							}).blur(function(){
+								this.value=''
+							});
+						</script>
+                        no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no
+                        no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no
+                        no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no no
+					</div>
+				</section>
+			</main>
+			
+			<footer class="layout-footer layout-contato container-fluid">
+				<address class="container" style="background-color: #1e2030; width: 100%; min-height: 150px; margin: 0px 0px 0px 0px;">
+					<br />
+					Telefone (11) 3090-6102
+					<br />
+					E-mail: 
+					<a href="mailto:contato@receiv.it" class="link-rodape" title="e-mail">
+						contato@receiv.it
+					</a>
+				</address>
+	
+				<small class="layout-creditos">
+					Copyright © 2020 Jorge Mauricio. Todos direitos reservados.
+					<br />
+					Criação: Jorge Mauricio - Full Stack Web Depeloper
+				</small>
+			</footer>
+		</div>
+	</body>
+	<script src="js/bootstrap.min.js"></script>
+</html>
