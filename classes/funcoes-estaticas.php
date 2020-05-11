@@ -3,7 +3,7 @@ class FuncoesEstaticas
 {
 	//Retirar caractéres numéricos.
 	//**************************************************************************************
-	function somenteNum($strNumero)
+	public static function somenteNum($strNumero)
 	{
 		//$strRetorno = "";
 		$strRetorno = preg_replace("/\D+/", "", $strNumero);
@@ -15,7 +15,7 @@ class FuncoesEstaticas
 	
 	//Formatar número para gravação.
 	//**************************************************************************************
-	function valorGravar($valor)
+	public static function valorGravar($valor)
 	{
 		$valor = str_replace(".", "", $valor);
 		$valor = str_replace(",", ".", $valor);
@@ -27,7 +27,7 @@ class FuncoesEstaticas
 	
     //Função para retornar valores formatados.
 	//**************************************************************************************
-	function formatarValorGenericoLer($strDados, $tipoDados = "")
+	public static function formatarValorGenericoLer($strDados, $tipoDados = "")
 	{
 		//tipoDados: cpf | cnpj | cep
 		$strRetorno = "";
@@ -57,12 +57,12 @@ class FuncoesEstaticas
 	
 	//Função leitura de valores.
 	//**************************************************************************************
-	function mascaraValorLer($strValor, $configMoeda = "R$")
+	public static function mascaraValorLer($strValor, $configMoeda = "R$")
 	{
 		//configMoeda: pagseguro | paypal | boleto
 		//Obs: mudar configMoeda para formatacaoEspecial
 		
-		//Vari�veis.
+		//Variáveis.
 		//----------
 		$strRetorno = "";
 		$strValor = strval($strValor); //Conversão para string.
@@ -94,14 +94,14 @@ class FuncoesEstaticas
 	//**************************************************************************************
 	
 	
-	//Fun��o para formatar data.
+	//Função para formatar data.
 	//**************************************************************************************
-	function dataLeitura($strData, $strFormatoData, $strFormatoRetorno)
+	public static function dataLeitura($strData, $strFormatoData, $strFormatoRetorno)
 	{
-		//$strFormatoRetorno: 1 - (dd/mm/aaaa | mm/dd/aaaa) | 2 - (dd/mm/aaaa hh:mm:ss | mm/dd/aaaa hh:mm:ss) | 3 - aaaa-mm-dd hh:mm:ss | 10 - (aaaa-mm-dd) | 11 - aaaa-mm-ddThh:mm:ss | 22 - hh:mm:ss | 101 - data por extenso (dia da semana, dia de m�s de ano)
-		//$strFormatoData: configSistemaFormatoData | configSiteFormatoData | sigla pa�s (br)
+		//$strFormatoRetorno: 1 - (dd/mm/aaaa | mm/dd/aaaa) | 2 - (dd/mm/aaaa hh:mm:ss | mm/dd/aaaa hh:mm:ss) | 3 - aaaa-mm-dd hh:mm:ss | 10 - (aaaa-mm-dd) | 11 - aaaa-mm-ddThh:mm:ss | 22 - hh:mm:ss | 101 - data por extenso (dia da semana, dia de mês de ano)
+		//$strFormatoData: configSistemaFormatoData | configSiteFormatoData | sigla país (br)
 		
-		//Vari�veis.
+		//Variáveis.
 		//----------------------
 		$strReturn = "";
 		//----------------------
@@ -167,7 +167,7 @@ class FuncoesEstaticas
 	
     //Função de inclusão de cadastro.
     //**************************************************************************************
-    function inserirCadastro($_nome, 
+    public static function inserirCadastro($_nome, 
 	$_cpfCnpj, 
 	$_dataNascimento, 
 	$_endereco, 
@@ -244,7 +244,7 @@ class FuncoesEstaticas
 	
 	//Função para preencher tabela (FetchAll).
 	//**************************************************************************************
-	function tabelaPesquisar($strTabela, 
+	public static function tabelaPesquisar($strTabela, 
 	$arrParametrosPesquisa, 
 	$strClassificacao = "", 
 	$strNRegistros = "")
@@ -406,7 +406,7 @@ class FuncoesEstaticas
 	
     //Função para exclusão genérica de registros.
 	//**************************************************************************************
-	function excluirRegistros($idRegistro, $strTabela, $strNomeCampo)
+	public static function excluirRegistros($idRegistro, $strTabela, $strNomeCampo)
 	{
 		$strRetorno = false;
 		
