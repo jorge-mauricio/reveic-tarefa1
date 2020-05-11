@@ -103,6 +103,30 @@
 					<h1 class="layout-titulos container">
 						<?php echo $pageSite->cphTituloLinkAtual; ?>
 					</h1>
+					<nav class="layout-nav">
+						<a href="dashboard.php" role="button" class="btn btn-primary" style="width: 32%;">
+							Dashboard
+						</a>
+						<a href="cadastro-listagem.php" role="button" class="btn btn-primary" style="width: 32%;">
+							Cadastros
+						</a>
+						
+						<div style="width: 32%;">
+							<form action="cadastro-listagem.php" method="GET"> 
+								<div>
+								  <div class="input-group">
+									<input type="text" class="form-control" placeholder="Busca" id="palavraChave" name="palavraChave" value="<?php echo $palavraChave; ?>"/>
+									<div class="input-group-btn">
+									  <button class="btn btn-primary" type="submit">
+										<span class="glyphicon glyphicon-search"></span>
+									  </button>
+									</div>
+								  </div>
+							</div>
+							</form>	
+						</div>
+						
+					</nav>
 					<div class="layout-conteudo">
 						<?php echo $pageSite->cphConteudoPrincipal; ?>
 					</div>

@@ -1,8 +1,11 @@
 <?php
+require_once "config-application.php";
+/*
 ini_set('display_errors', 1);
 require_once "config-application-db.php";
 require_once "classes/funcoes-estaticas.php";
 require_once "classes/obj-cadastro-listagem.php";
+*/
 
 //Layout
 //$pageSite = new \stdClass();
@@ -14,10 +17,21 @@ $pageSite = (object)NULL;
 
 
 //Variáveis.
+$palavraChave = isset($_GET["palavraChave"]) == true ? $_GET["palavraChave"] : "";
+
 $mensagemSucesso = isset($_GET["mensagemSucesso"]) == true ? $_GET["mensagemSucesso"] : "";
 $mensagemErro = isset($_GET["mensagemErro"]) == true ? $_GET["mensagemErro"] : "";
 
-$oclCadastro = new ObjCadastroListagem(array());
+
+//Criação dos objetos.
+$arrParametros = array();
+if($palavraChave <> "")
+{
+	array_push($arrParametros, "nome;" . $palavraChave . ";like");
+}
+
+//$oclCadastro = new ObjCadastroListagem(array());
+$oclCadastro = new ObjCadastroListagem($arrParametros);
 $resultadoCadastroListagem = NULL;
 
 
@@ -33,6 +47,10 @@ $resultadoCadastroListagem = FuncoesEstaticas::tabelaPesquisar("tb_cadastro",
 */																
 //echo "resultadoCadastroListagem=<pre>";
 //var_dump($resultadoCadastroListagem);
+//echo "</pre><br />";
+
+//echo "arrParametros=<pre>";
+//var_dump($arrParametros);
 //echo "</pre><br />";
 ?>
 
@@ -76,7 +94,7 @@ $pageSite->cphTituloLinkAtual = ob_get_clean();
 				<caption style="display: none;">Cadastros</caption>
 				<thead class="tabela-cabecalho">
 					<tr>
-						<td class="text-center">Cadastros</td>
+						<td>Cadastros</td>
 						<td class="text-center" style="width: 30px;">Editar</td>
 						<td class="text-center" style="width: 20px;">X</td>
 					</tr>
@@ -129,7 +147,11 @@ $pageSite->cphTituloLinkAtual = ob_get_clean();
 				</tbody>
 				<tfoot>
 					<tr>
-						<td colspan="3" style="text-align: center;">
+						<td colspan="3">
+							<span style="line-height: 35px;">
+								Qtd.: <?php echo count($resultadoCadastroListagem); ?>
+							</span>
+						
 							<button type="submit" class="btn btn-danger" style="float:right;">
 								Excluir Selecionados
 							</button>
@@ -152,7 +174,7 @@ $pageSite->cphConteudoPrincipal = ob_get_clean();
 <?php ob_start(); /* cphConteudo*/ ?>
 	<section>
 		<h1 class="layout-titulos container">
-			Inserir Novo Cadastro
+			Criar Novo Cadastro
 		</h1>
 		<div class="layout-conteudo">
 			<form name="formCadastro" id="formCadastro" action="cadastro-acoes.php" method="post" enctype="multipart/form-data">
@@ -193,7 +215,7 @@ $pageSite->cphConteudoPrincipal = ob_get_clean();
 					<input type="text" class="form-control" id="endereco" name="endereco" maxlength="1000" required placeholder="Endereço" />
 				</div>
 				<div class="div-campos">
-					<textarea class="form-control" id="descricao_titulo" name="descricao_titulo" rows="4" required placeholder="Descrição" style="resize: none;"></textarea>
+					<textarea class="form-control" id="descricao_titulo" name="descricao_titulo" rows="4" required placeholder="Descrição do Título" style="resize: none;"></textarea>
 				</div>
 				<div class="div-campos">
 					<div class="input-group" style="width: 50%; float: left;">
@@ -238,6 +260,7 @@ $pageSite->cphConteudo = ob_get_clean();
 //Inclusão do template do layout.
 include_once "layout.php";
 
+unset($oclCadastro);
 unset($resultadoCadastroListagem);
 
 $dbSystemConPDO = null;

@@ -1,11 +1,13 @@
 <?php
+require_once "config-application.php";
+/*
 ini_set('display_errors', 1);
 date_default_timezone_set('America/Sao_Paulo');
 require_once "config-application-db.php";
 require_once "classes/funcoes-estaticas.php";
 require_once "classes/obj-cadastro-create.php";
 require_once "classes/obj-cadastro-update.php";
-
+*/
 
 //Variáveis.
 $_method = $_POST["_method"];

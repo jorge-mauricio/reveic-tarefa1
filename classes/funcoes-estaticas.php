@@ -311,6 +311,13 @@ class FuncoesEstaticas
 			}
 			
 			
+			//Like.
+			if($parametrosPesquisaTipoCampo == "like")
+			{
+                $strSqlTabelaGenericaSelect .= $strOperador . " " . $parametrosPesquisaNomeCampo . " LIKE CONCAT ('%', ?, '%') ";
+			}
+			
+			
 			//Verificação de erro - debug.
 			//echo "parametrosPesquisaNomeCampo=" . $parametrosPesquisaNomeCampo . "<br>";
 			//echo "parametrosPesquisaValorCampo=" . $parametrosPesquisaValorCampo . "<br>";
@@ -355,7 +362,12 @@ class FuncoesEstaticas
 					$statementTabelaGenericaSelect->bindValue(($countArray + 1), $parametrosPesquisaValorCampo, PDO::PARAM_INT);
 				}
 				
-				
+				//Like.
+				if($parametrosPesquisaTipoCampo == "like")
+				{
+					$statementTabelaGenericaSelect->bindValue(($countArray + 1), $parametrosPesquisaValorCampo, PDO::PARAM_STR);
+				}
+
 				//Verificação de erro - debug.
 				//echo "parametrosPesquisaNomeCampo=" . $parametrosPesquisaNomeCampo . "<br>";
 				//echo "parametrosPesquisaValorCampo=" . $parametrosPesquisaValorCampo . "<br>";

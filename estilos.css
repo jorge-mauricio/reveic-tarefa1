@@ -1,5 +1,11 @@
 /*Layout.*/
 /* ************************************************************************************** */
+@font-face {
+font-family: 'Glyphicons Halflings';
+src: url('https://netdna.bootstrapcdn.com/bootstrap/3.0.0/fonts/glyphicons-halflings-regular.eot');  src: url('https://netdna.bootstrapcdn.com/bootstrap/3.0.0/fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('https://netdna.bootstrapcdn.com/bootstrap/3.0.0/fonts/glyphicons-halflings-regular.woff') format('woff'), url('https://netdna.bootstrapcdn.com/bootstrap/3.0.0/fonts/glyphicons-halflings-regular.ttf') format('truetype'), url('https://netdna.bootstrapcdn.com/bootstrap/3.0.0/fonts/glyphicons-halflings-regular.svg#glyphicons-halflingsregular') format('svg');
+}
+
+
 .layout-header
 {
 	position: relative; 
@@ -16,7 +22,15 @@
 	margin-top: 10px;
 	margin-bottom: 10px;
 }
-
+.layout-nav
+{
+	position: relative; 
+	display: flex; 
+	justify-content: space-between; 
+	flex-wrap: wrap; 
+	clear: both;
+	margin-top: 4px;
+}
 .layout-main
 {
 	/*position: relative; 
@@ -179,5 +193,26 @@ input, textarea
 	
 	margin-bottom: 5px;
 	overflow: hidden;
+}
+.div-detalhes
+{
+	position: relative; 
+	display: block; 
+	font-family: Arial, Helvetica, sans-serif;
+	color: #32364a;
+	background-color: #ffffff;
+	font-size: 13px;
+	border-radius: 5px;
+	padding: 5px;
+}
+.div-detalhes-fileira
+{
+	position: relative; 
+	display: block; 
+	margin-bottom: 5px;
+}
+.div-detalhes-fileira > strong
+{
+	color: #ff4b14;
 }
 /* ************************************************************************************** */
