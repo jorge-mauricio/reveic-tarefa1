@@ -4,6 +4,7 @@ date_default_timezone_set('America/Sao_Paulo');
 require_once "config-application-db.php";
 require_once "classes/funcoes-estaticas.php";
 require_once "classes/obj-cadastro-create.php";
+require_once "classes/obj-cadastro-update.php";
 
 
 //Variáveis.
@@ -60,6 +61,45 @@ if($_method == "CREATE")
 	//echo "occCadastro=<pre>";
 	//var_dump($occCadastro);
 	//echo "</pre><br />";
+}
+
+
+//Update.
+if($_method == "UPDATE")
+{
+	$id = $_POST["id"];
+	$nome = $_POST["nome"];
+	$cpfCnpj = FuncoesEstaticas::somenteNum($_POST["cpf_cnpj"]);
+	$dataNascimento = $_POST["data_nascimento"];
+	$endereco = $_POST["endereco"];
+	$descricaoTitulo = $_POST["descricao_titulo"];
+	$valor = FuncoesEstaticas::valorGravar($_POST["valor"]);
+	$dataVencimento = $_POST["data_vencimento"];
+	
+	
+	//Criação de objetos.
+	/**/
+	$ocuCadastro = new ObjCadastroUpdate($id, 
+										$nome, 
+										$cpfCnpj, 
+										$dataNascimento, 
+										$endereco, 
+										$descricaoTitulo, 
+										$valor, 
+										$dataVencimento);
+	
+	$ocuCadastro->cadastroUpdate();
+	
+	if($ocuCadastro->statusUpdate == true)
+	{
+		$mensagemSucesso = 3;
+	}else{
+		$mensagemErro = 1;
+	}
+	
+	
+	//Debug.
+	//echo "UPDATE=true<br />"; //debug.
 }
 
 

@@ -38,6 +38,7 @@ $pageSite->cphTituloLinkAtual = ob_get_clean();
 <?php ob_start(); /* cphTitle*/ ?>
 						<form name="formCadastro" id="formCadastro" action="cadastro-acoes.php" method="post" enctype="multipart/form-data">
 							<input type="hidden" name="_method" value="UPDATE" />
+							<input type="hidden" name="id" value="<?php echo $ocdCadastro->id; ?>" />
 							
 							<div class="div-campos">
 								<input type="text" class="form-control" id="nome" name="nome" maxlength="255" required placeholder="Nome" value="<?php echo $ocdCadastro->nome; ?>" />
@@ -68,9 +69,9 @@ $pageSite->cphTituloLinkAtual = ob_get_clean();
 											//document.getElementById("nome").value = contadorCaracteres; //debug
 										});
 									</script>
-								<input type="text" onfocus="(this.type='date')" class="form-control" id="data_nascimento" name="data_nascimento" required placeholder="Data de Nasc." max="2020-05-10" style="width: 50%; float: right;" value="<?php echo $ocdCadastro->dataNascimento; ?>" />
+								<input type="date" onfocus="(this.type='date')" class="form-control" id="data_nascimento" name="data_nascimento" required placeholder="Data de Nasc." max="2020-05-10" style="width: 50%; float: right;" value="<?php echo $ocdCadastro->dataNascimentoEditar; ?>" />
 							</div>
-							<div class="div-campos form-group">
+							<div class="div-campos">
 								<input type="text" class="form-control" id="endereco" name="endereco" maxlength="1000" required placeholder="Endereço" value="<?php echo $ocdCadastro->endereco; ?>" />
 							</div>
 							<div class="div-campos">
@@ -84,7 +85,7 @@ $pageSite->cphTituloLinkAtual = ob_get_clean();
 										$("#valor").maskMoney({allowNegative: false, thousands:'.', decimal:',', affixesStay: false});
 									</script>
 								</div>
-								<input type="text" class="form-control" id="data_vencimento" name="data_vencimento" required placeholder="Data de Vencimento" min="2020-05-10" style="width: 50%; float: right;" value="<?php echo $ocdCadastro->dataVencimento; ?>" />
+								<input type="date" class="form-control" id="data_vencimento" name="data_vencimento" required placeholder="Data de Vencimento" min="2020-05-10" style="width: 50%; float: right;" value="<?php echo $ocdCadastro->dataVencimentoEditar; ?>" />
 							</div>
 							<div class="div-campos" style="text-align: center;">
 								<button id="btoSubmit" type="submit" class="btn btn-success" style="width: 100px; margin: auto; float: left;">
@@ -101,9 +102,9 @@ $pageSite->cphTituloLinkAtual = ob_get_clean();
 						</form>
 						<script>
 							$("#data_nascimento, #data_vencimento").focus(function(){
-								this.type='date'
+								//this.type='date'
 							}).blur(function(){
-								this.type='text'
+								//this.type='text'
 							});
 							
 							$("#valor").focus(function(){
