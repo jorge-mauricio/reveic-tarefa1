@@ -45,7 +45,7 @@
 		<meta property="og:type" content="website" /><!--ref: http://ogp.me/#types | https://developers.facebook.com/docs/reference/opengraph/-->
 		<meta property="og:url" content="https://www.jorgemauricio.com/clientes/receiv" />
 		<meta property="og:description" content="Tarefa de Teste" />
-		<meta property="og:image" content="https://www.jorgemauricio.com/clientes/img/layout-logo-receiv02.png" /><!--The recommended resolution for the OG image is 1200x627 pixels, the size — up to 5MB.--><!--120x120px, up to 1MB--><!--JPG ou PNG, menos que 300k e dimensão mínima de 300x200 pixels.-->
+		<meta property="og:image" content="https://www.jorgemauricio.com/clientes/receiv/img/layout-logo-receiv02.png" /><!--The recommended resolution for the OG image is 1200x627 pixels, the size — up to 5MB.--><!--120x120px, up to 1MB--><!--JPG ou PNG, menos que 300k e dimensão mínima de 300x200 pixels.-->
 		<meta property="og:image:alt" content="RECEIV - Logo" />
 		<meta property="og:locale" content="pt_BR" />
 		
